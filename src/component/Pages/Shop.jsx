@@ -107,20 +107,38 @@ const Shop = () => {
         </h1>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-semibold border transition ${
-                selectedCategory === cat
-                  ? "bg-yellow-500 text-white border-yellow-500"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-yellow-100"
-              }`}
+        <div className="mb-10 flex justify-center">
+          {/* Desktop Buttons */}
+          <div className="hidden sm:flex flex-wrap justify-center gap-3">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-5 py-2 rounded-full text-sm font-semibold border transition ${
+                  selectedCategory === cat
+                    ? "bg-yellow-500 text-white border-yellow-500"
+                    : "bg-white text-gray-700 border-gray-300 hover:bg-yellow-100"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile Dropdown */}
+          <div className="sm:hidden w-full max-w-xs">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full border border-gray-300 rounded-full px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400"
             >
-              {cat}
-            </button>
-          ))}
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Product Grid */}
