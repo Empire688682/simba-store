@@ -4,7 +4,8 @@ import { ArrowRight, ArrowLeft, PlusCircle, ImageIcon, Trash2 } from 'lucide-rea
 import uploadMultipleImages from '../uploadMultipleImages uploadMultipleImages uploadMultipleImages'
 
 export default function AddProduct() {
-    const [step, setStep] = useState(0) // 0 = choose type, 1 = main, 2 = details, 3 = media+tags
+    const [step, setStep] = useState(0) 
+    const labels = ['Choose', 'Main', 'Details', 'Media', "Preview"]
     const [type, setType] = useState('product') // 'product' | 'dog'
     const [tagInput, setTagInput] = useState('')
     const fileInputRef = useRef(null);
@@ -138,13 +139,20 @@ export default function AddProduct() {
                 </header>
 
                 {/* progress */}
-                <div className="flex items-center gap-3 mb-8">
-                    {['Choose', 'Main', 'Details', 'Media'].map((label, i) => (
+                <div className="flex hidden md:flex items-center gap-3 mb-8">
+                    {labels.map((label, i) => (
                         <div key={label} className="flex-1">
                             <div className={`w-full h-2 rounded-full ${i <= step ? 'bg-yellow-500' : 'bg-gray-200'}`}></div>
                             <p className="text-xs text-center mt-2">{label}</p>
                         </div>
                     ))}
+                </div>
+
+                <div className="flex hidden md:hidden items-center gap-3 mb-8">
+                    <div className="flex-1">
+                            <div className={`w-full h-2 rounded-full bg-yellow-500`}></div>
+                            <p className="text-xs text-center mt-2">{labels[step]}</p>
+                        </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
