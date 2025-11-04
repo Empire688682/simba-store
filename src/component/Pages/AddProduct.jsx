@@ -148,7 +148,7 @@ export default function AddProduct() {
                     ))}
                 </div>
 
-                <div className="flex hidden md:hidden items-center gap-3 mb-8">
+                <div className="block md:hidden items-center gap-3 mb-8">
                     <div className="flex-1">
                             <div className={`w-full h-2 rounded-full bg-yellow-500`}></div>
                             <p className="text-xs text-center mt-2">{labels[step]}</p>
