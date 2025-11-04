@@ -9,6 +9,7 @@ import Contact from './component/Pages/Contact';
 import About from './component/Pages/About';
 import Cart from './component/Pages/Cart';
 import ProductDetails from './component/Pages/ProductDetails';
+import AddProduct from './component/Pages/AddProduct';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/shop' element={<Products />} />
+        <Route path='/add-product' element={<AddProduct />} />
         <Route path='*' element={<NotFound />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />

@@ -25,7 +25,7 @@ const Cart = () => {
   const total = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 pb-28 px-6 md:px-20">
+    <div className="min-h-[80vh] bg-gray-50 pt-20 pb-28 px-6 md:px-20">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
