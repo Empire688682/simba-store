@@ -39,12 +39,24 @@ export default function AddProduct() {
     const update = (patch) => setData((d) => ({ ...d, ...patch }))
 
     const handleFileChange = (e) => {
-        const files = Array.from(e.target.files || [])
-        if (!files.length) return
+        const files = Array.from(e.target.files || []);
+        if (!files.length) return;
 
-        const mapped = files.map((file) => ({ file, url: URL.createObjectURL(file) }))
-        update({ images: [...data.images, ...mapped] })
-    }
+        // Prevent more than 5 images
+        const total = data.images.length + files.length;
+        if (total > 5) {
+            alert("You can only upload a maximum of 5 images.");
+            return;
+        }
+
+        const mapped = files.map((file) => ({
+            file,
+            url: URL.createObjectURL(file),
+        }));
+
+        update({ images: [...data.images, ...mapped] });
+    };
+
 
     const removeImage = (index) => {
         const items = data.images.slice()
@@ -299,7 +311,7 @@ export default function AddProduct() {
 
                                 <div className="flex justify-between mt-6">
                                     <button type="button" onClick={() => setStep(1)} className="flex items-center gap-2 border px-4 py-2 rounded-lg"><ArrowLeft size={16} /> Back</button>
-                                    <button type="button" onClick={() => canNextFromDetails()? setStep(3): alert("Fill up the required field!")} className="bg-yellow-500 text-white px-5 py-2 rounded-lg flex items-center gap-2">Next <ArrowRight size={16} /></button>
+                                    <button type="button" onClick={() => canNextFromDetails() ? setStep(3) : alert("Fill up the required field!")} className="bg-yellow-500 text-white px-5 py-2 rounded-lg flex items-center gap-2">Next <ArrowRight size={16} /></button>
                                 </div>
                             </motion.div>
                         )}
@@ -315,7 +327,7 @@ export default function AddProduct() {
                             >
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700">Images</label>
-                                    <p className="text-xs text-gray-500">Upload images (multiple allowed). First image will be primary.</p>
+                                    <p className="text-xs text-gray-500">Upload images (Max-5). First image will be primary.</p>
 
                                     <div className="mt-3 flex items-center gap-3">
                                         <input ref={fileInputRef} onChange={handleFileChange} type="file" accept="image/*" multiple className="hidden" />
