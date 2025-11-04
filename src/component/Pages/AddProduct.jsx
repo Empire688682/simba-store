@@ -1,12 +1,14 @@
 import React, { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ArrowLeft, PlusCircle, ImageIcon, Trash2 } from 'lucide-react'
+import uploadMultipleImages from '../uploadMultipleImages uploadMultipleImages uploadMultipleImages'
 
 export default function AddProduct() {
     const [step, setStep] = useState(0) // 0 = choose type, 1 = main, 2 = details, 3 = media+tags
     const [type, setType] = useState('product') // 'product' | 'dog'
     const [tagInput, setTagInput] = useState('')
-    const fileInputRef = useRef(null)
+    const fileInputRef = useRef(null);
+    const [loding, setLoding] = useState(false);
 
     const [data, setData] = useState({
         // shared
@@ -96,18 +98,32 @@ export default function AddProduct() {
         return false
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        // prepare payload (convert files to FormData on real upload)
-        const payload = { ...data }
-        // convert image files to names only for demo
-        payload.images = data.images.map((i) => i.file?.name || i.url)
-        console.log('Submitting product payload:', payload)
-        // TODO: replace with real API call
-        alert('Product submitted (check console).')
-        // reset (optional)
-        // window.location.reload()
-    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (data.images.length === 0) {
+            alert("At least one image is required.");
+            return;
+        }
+        setLoding(true);
+        try {
+            const payload = { ...data }
+            const imageUrls = await uploadMultipleImages(data.images.map((i) => i.file) || []);
+            payload.images = imageUrls;
+            if (imageUrls === null || imageUrls.length === 0) {
+                alert("Images upload error.");
+                return;
+            }
+            console.log("Submitting product:", payload);
+            alert("Product submitted! Check console for data.");
+            window.location.reload()
+        } catch (error) {
+            console.log("Submission error:", error);
+            alert("There was an error submitting the product.");
+        }
+        finally {
+            setLoding(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-start justify-center py-12 px-4">
@@ -349,11 +365,85 @@ export default function AddProduct() {
 
                                 <div className="flex justify-between mt-6">
                                     <button type="button" onClick={() => setStep(2)} className="flex items-center gap-2 border px-4 py-2 rounded-lg"><ArrowLeft size={16} /> Back</button>
-                                    <button type="submit" className="bg-green-600 text-white px-5 py-2 rounded-lg">Submit product</button>
+                                    <button type="button" onClick={() => setStep(4)} className="bg-yellow-500 text-white px-5 py-2 rounded-lg flex items-center gap-2">Next <ArrowRight size={16} /> </button>
                                 </div>
 
                             </motion.div>
                         )}
+
+                        {step === 4 && (
+                            <motion.div
+                                key="preview"
+                                initial={{ opacity: 0, x: 30 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -30 }}
+                                transition={{ duration: 0.35 }}
+                                className="space-y-6"
+                            >
+                                <h2 className="text-lg font-semibold text-gray-800 mb-4">Preview your listing</h2>
+
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <h3 className="text-sm text-gray-500 mb-2">Basic Info</h3>
+                                        <p><strong>Name:</strong> {data.name}</p>
+                                        <p><strong>Category:</strong> {data.category}</p>
+                                        <p><strong>Price:</strong> ₦{data.price}</p>
+                                        {data.discountPrice && <p><strong>Discount:</strong> ₦{data.discountPrice}</p>}
+                                        <p><strong>Location:</strong> {data.location}</p>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-sm text-gray-500 mb-2">Details</h3>
+                                        {type === 'dog' ? (
+                                            <>
+                                                <p><strong>Breed:</strong> {data.breed}</p>
+                                                <p><strong>Age:</strong> {data.age}</p>
+                                                <p><strong>Gender:</strong> {data.gender}</p>
+                                            </>
+                                        ) : (
+                                            <>
+                                                {data.weight && <p><strong>Weight:</strong> {data.weight}</p>}
+                                                <p><strong>Stock:</strong> {data.stock}</p>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {data.tags?.length > 0 && (
+                                    <div>
+                                        <h3 className="text-sm text-gray-500 mb-2">Tags</h3>
+                                        <div className="flex flex-wrap gap-2">
+                                            {data.tags.map((t) => (
+                                                <span key={t} className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">{t}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {data.images?.length > 0 && (
+                                    <div>
+                                        <h3 className="text-sm text-gray-500 mb-2">Images</h3>
+                                        <div className="grid grid-cols-3 gap-3">
+                                            {data.images.map((img, i) => (
+                                                <img key={i} src={img.url} alt={`preview-${i}`} className="rounded-lg object-cover h-28 w-full border" />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="flex justify-between mt-6">
+                                    <button disabled={loding} type="button" onClick={() => setStep(3)} className="flex items-center gap-2 border px-4 py-2 rounded-lg">
+                                        <ArrowLeft size={16} /> Back
+                                    </button>
+
+                                    {/* this uses your existing handleSubmit (form onSubmit) */}
+                                    <button disabled={loding} type="button" onClick={handleSubmit} className="bg-green-600 text-white px-5 py-2 rounded-lg">
+                                        {loding ? 'Submitting...' : 'Confirm & Submit'}
+                                    </button>
+                                </div>
+                            </motion.div>
+                        )}
+
                     </AnimatePresence>
                 </form>
             </motion.div>
