@@ -5,7 +5,7 @@ import uploadMultipleImages from '../uploadMultipleImages uploadMultipleImages u
 import { UseGlobalContext } from '../Context'
 
 export default function AddProduct() {
-    const {apiUrl} = UseGlobalContext();
+    const { apiUrl } = UseGlobalContext();
     const [step, setStep] = useState(0)
     const labels = ['Choose', 'Main', 'Details', 'Media', "Preview"]
     const [type, setType] = useState('product') // 'product' | 'dog'
@@ -103,39 +103,51 @@ export default function AddProduct() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (data.images.length === 0) {
             alert("At least one image is required.");
             return;
         }
+
         setLoding(true);
         try {
-            const payload = { ...data }
-            const imageUrls = await uploadMultipleImages(data.images.map((i) => i.file) || []);
+            const payload = { ...data };
+
+            // Upload images to Cloudinary
+            const imageUrls = await uploadMultipleImages(
+                data.images.map((i) => i.file) || []
+            );
             payload.images = imageUrls;
-            if (imageUrls === null || imageUrls.length === 0) {
-                alert("Images upload error.");
+
+            if (!imageUrls || imageUrls.length === 0) {
+                alert("Image upload failed.");
                 return;
-            };
-            try {
-                const response = await fetch(`${apiUrl}/products`, payload, {
-                    method: "POST"
-                },);
-                if (response.ok) {
-                    console.log("Submitting product:", payload);
-                    alert("Product submitted! Check console for data.");
-                    window.location.reload();
-                }
-            } catch (error) {
-                console.log("ProductP-Err:", error);
+            }
+
+            // ✅ Corrected fetch syntax
+            const response = await fetch(`${apiUrl}/products`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+                const result = await response.text();
+                console.log("Server response:", result);
+                alert("✅ Product added successfully!");
+                window.location.reload();
+            } else {
+                console.error("❌ Failed:", response.status);
+                alert("Something went wrong while saving the product.");
             }
         } catch (error) {
-            console.log("Submission error:", error);
-            alert("There was an error submitting the product.");
-        }
-        finally {
+            console.error("Product submit error:", error);
+            alert("An error occurred while submitting the product.");
+        } finally {
             setLoding(false);
         }
     };
+
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-start justify-center py-12 px-4">

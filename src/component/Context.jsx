@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
-    const apiUrl = "http://localhost:8080/api";
+    const apiUrl = "http://localhost:8080/api/v1";
     const [allProducts, setAllProducts] = useState([]);
     async function fetchAllProducts() {
         try {
