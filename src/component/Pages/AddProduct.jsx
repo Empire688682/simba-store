@@ -117,9 +117,9 @@ export default function AddProduct() {
                 return;
             };
             try {
-                const response = await fetch(`${apiUrl}/products`, {
+                const response = await fetch(`${apiUrl}/products`, payload, {
                     method: "POST"
-                });
+                },);
                 if (response.ok) {
                     console.log("Submitting product:", payload);
                     alert("Product submitted! Check console for data.");
