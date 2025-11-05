@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { UseGlobalContext } from "../Context";
 
 const products = [
   // 🐕 Dog Essentials
@@ -83,6 +84,7 @@ const products = [
 ];
 
 const Shop = () => {
+  const {allProducts} = UseGlobalContext();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const categories = [

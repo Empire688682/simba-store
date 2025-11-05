@@ -2,9 +2,11 @@ import React, { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ArrowLeft, PlusCircle, ImageIcon, Trash2 } from 'lucide-react'
 import uploadMultipleImages from '../uploadMultipleImages uploadMultipleImages uploadMultipleImages'
+import { UseGlobalContext } from '../Context'
 
 export default function AddProduct() {
-    const [step, setStep] = useState(0) 
+    const {apiUrl} = UseGlobalContext();
+    const [step, setStep] = useState(0)
     const labels = ['Choose', 'Main', 'Details', 'Media', "Preview"]
     const [type, setType] = useState('product') // 'product' | 'dog'
     const [tagInput, setTagInput] = useState('')
@@ -113,10 +115,19 @@ export default function AddProduct() {
             if (imageUrls === null || imageUrls.length === 0) {
                 alert("Images upload error.");
                 return;
+            };
+            try {
+                const response = await fetch(`${apiUrl}/products`, {
+                    method: "POST"
+                });
+                if (response.ok) {
+                    console.log("Submitting product:", payload);
+                    alert("Product submitted! Check console for data.");
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.log("ProductP-Err:", error);
             }
-            console.log("Submitting product:", payload);
-            alert("Product submitted! Check console for data.");
-            window.location.reload()
         } catch (error) {
             console.log("Submission error:", error);
             alert("There was an error submitting the product.");
@@ -150,9 +161,9 @@ export default function AddProduct() {
 
                 <div className="block md:hidden items-center gap-3 mb-8">
                     <div className="flex-1">
-                            <div className={`w-full h-2 rounded-full bg-yellow-500`}></div>
-                            <p className="text-xs text-center mt-2">{labels[step]}</p>
-                        </div>
+                        <div className={`w-full h-2 rounded-full bg-yellow-500`}></div>
+                        <p className="text-xs text-center mt-2">{labels[step]}</p>
+                    </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
