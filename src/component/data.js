@@ -79,3 +79,21 @@ export const localProducts = [
     image: "/happy-dog.png",
   },
 ];
+
+export const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Shop", path: "/shop" },
+    { name: "Add Product", path: "/add-product" },
+    { name: "Favorite", path: "/favorite" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
+  ];
+
+  export const categories = [
+    "All",
+    "Dog Essentials",
+    "Food & Supplements",
+    "Health & Drugs",
+    "Toys & Accessories",
+    "Grooming & Hygiene",
+  ];

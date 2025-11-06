@@ -2,19 +2,20 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ShoppingCart, PawPrint, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { UseGlobalContext } from "./Context";
+import { navLinks } from "./data";
 
 const Header = () => {
+  const {cartItems} = UseGlobalContext()
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Shop", path: "/shop" },
-    { name: "Add Product", path: "/add-product" },
-    { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" },
-  ];
+  function getCartNumber(){
+    return Object.keys(cartItems).reduce((sum, productId)=>{
+      return sum + cartItems[productId];
+    }, 0);
+  }
 
   return (
     <header className="w-full bg-white shadow-md sticky top-0 z-50">
@@ -51,7 +52,7 @@ const Header = () => {
           >
             <ShoppingCart size={24} />
             <span className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-              3
+              {getCartNumber()}
             </span>
           </Link>
         </nav>
@@ -81,9 +82,12 @@ const Header = () => {
           <Link
             to="/cart"
             onClick={() => setMenuOpen(false)}
-            className="flex items-center gap-2 px-4 py-3 border-t border-gray-100 text-gray-700 hover:bg-amber-50 hover:text-amber-500"
+            className="flex items-center relative gap-2 px-4 py-3 border-t border-gray-100 text-gray-700 hover:bg-amber-50 hover:text-amber-500"
           >
             <ShoppingCart size={20} /> Cart
+            <span className="absolute top-3 left-6 bg-amber-500 text-white text-xs font-bold rounded-full w-3 h-3 flex items-center justify-center">
+              {getCartNumber()}
+            </span>
           </Link>
         </div>
       )}

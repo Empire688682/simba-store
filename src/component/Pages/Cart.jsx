@@ -4,16 +4,16 @@ import { ShoppingCart, Trash2 } from "lucide-react";
 import { UseGlobalContext } from "../Context";
 
 const Cart = () => {
-  const { cartItems, products } = UseGlobalContext();
+  const { cartItems, products, addToCart, removeFromCart } = UseGlobalContext();
 
-  function getTotalAmount(){
-    return Object.keys(cartItems).reduce((total, productId)=>{
-      const product = products.find((p)=>p.id === parseInt(productId));
-      if(!product) return total
+  function getTotalAmount() {
+    return Object.keys(cartItems).reduce((total, productId) => {
+      const product = products.find((p) => p.id === parseInt(productId));
+      if (!product) return total
       return total + product.price * cartItems[productId];
     }, 0)
   };
-  
+
 
   return (
     <div className="min-h-[80vh] bg-gray-50 pt-20 pb-28 px-6 md:px-20">
@@ -56,18 +56,17 @@ const Cart = () => {
                         <p className="text-yellow-700 font-bold">
                           ₦{product.price.toLocaleString()}
                         </p>
-                        <div className="flex items-center gap-2 mt-1">
-                          <button className="w-6 h-6 bg-gray-200 rounded-md hover:bg-gray-300 transition">
-                            -
-                          </button>
-                          <span className="text-gray-700">{quantity}</span>
-                          <button className="w-6 h-6 bg-yellow-400 rounded-md hover:bg-yellow-500 transition">
-                            +
-                          </button>
-                        </div>
                       </div>
                     </div>
-                    <Trash2 className="text-red-500 cursor-pointer hover:scale-110 transition" />
+                    <div className="flex items-center gap-2 mt-1">
+                      <button onClick={() => removeFromCart(product.id)} className="w-6 h-6 bg-gray-200 rounded-md hover:bg-gray-300 transition">
+                        -
+                      </button>
+                      <span className="text-gray-700">{quantity}</span>
+                      <button onClick={() => addToCart(product.id)} className="w-6 h-6 bg-yellow-400 rounded-md hover:bg-yellow-500 transition">
+                        +
+                      </button>
+                    </div>
                   </motion.div>
                 )
               })}

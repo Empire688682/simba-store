@@ -7,23 +7,36 @@ export const AppProvider = ({ children }) => {
     const apiUrl = "http://localhost:8080/api/v1";
     const [products, setProducts] = useState(localProducts);
     const [cartItems, setCartItems] = useState({});
+    const [favorites, setFavorites] = useState([]);
+    const [isloaded, setIsLoaded] = useState(false);
 
+    useEffect(()=>{
+        const savedCart = localStorage.getItem("CartItems");
+        if(savedCart){
+            setCartItems(JSON.parse(savedCart));
+        }
+        setIsLoaded(true)
+    }, []);
+    
+    useEffect(()=>{
+        if(isloaded){
+            localStorage.setItem("CartItems", JSON.stringify(cartItems));
+        }
+    }, [cartItems, isloaded]);
 
-    //  useEffect(() => {
-    //      async function fetchAllProducts() {
-    //      try {
-    //          const response = await fetch(`${apiUrl}/products`,
-    //              { method: "GET" }
-    //          );
-    //          const data = await response.json();
-    //          console.log("Fetched products:", data);
-    //          setAllProducts(data);
-    //      } catch (error) {
-    //          console.log("Error fetching products:", error);
-    //      }
-    //  };
-    //  fetchAllProducts();
-    //  }, []);
+    useEffect(()=>{
+        const savedFave = localStorage.getItem("FaveItems");
+        if(savedFave){
+            setFavorites(JSON.parse(savedFave));
+        }
+        setIsLoaded(true)
+    }, []);
+    
+    useEffect(()=>{
+        if(isloaded){
+            localStorage.setItem("FaveItems", JSON.stringify(favorites));
+        }
+    }, [favorites, isloaded]);
 
     {/**Add to cart */}
     function addToCart(productId){
@@ -40,17 +53,25 @@ export const AppProvider = ({ children }) => {
 
     {/**Remove from cart */}
     function removeFromCart(productId){
-
+        setCartItems((prev)=>{
+            const updatedCart = {...prev};
+            if(updatedCart[productId] > 1){
+                updatedCart[productId] -= 1
+            }
+            else{
+                delete updatedCart[productId]
+            }
+            return updatedCart;
+        })
     }
 
      {/**Add to Fav */}
-    function addToFav(productId){
-        
-    }
-
-    {/**Remove from Fav */}
-    function removeFromFav(productId){
-
+     function toggleFave(productId){
+        setFavorites((prev) =>
+            prev.includes(productId)
+            ? prev.filter((id)=> id !== productId) 
+            : [...prev, productId] 
+        );
     }
 
     return <AppContext.Provider value={{
@@ -58,9 +79,9 @@ export const AppProvider = ({ children }) => {
         products,
         addToCart,
         removeFromCart,
-        addToFav,
-        removeFromFav,
-        cartItems
+        toggleFave,
+        cartItems,
+        favorites
     }}>
         {children}
     </AppContext.Provider>

@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { UseGlobalContext } from "../Context";
+import { Heart } from "lucide-react";
+import { categories } from "../data";
 
 const Shop = () => {
-  const {products, addToCart, } = UseGlobalContext();
+  const { products, addToCart, favorites, toggleFave } = UseGlobalContext();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = [
-    "All",
-    "Dog Essentials",
-    "Food & Supplements",
-    "Health & Drugs",
-    "Toys & Accessories",
-    "Grooming & Hygiene",
-  ];
+  console.log("favorites:", favorites);
+  
 
   const filteredProducts =
     selectedCategory === "All"
@@ -63,30 +59,49 @@ const Shop = () => {
 
         {/* Product Grid */}
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {filteredProducts.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white shadow-lg rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300"
-            >
-              <img
-                src={item.image}
-                alt={item.name}
-                className="h-48 w-full object-cover"
-              />
-              <div className="p-4 flex flex-col justify-between">
-                <h2 className="text-lg font-semibold text-gray-700 mb-1">
-                  {item.name}
-                </h2>
-                <p className="text-sm text-gray-500 mb-2">{item.category}</p>
-                <p className="text-gray-700 font-semibold mb-4">
-                  ₦{item.price.toLocaleString()}
-                </p>
-                <button onClick={()=>addToCart(item.id)} className="bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition">
-                  Add to Cart
+          {filteredProducts.map((item) => {
+            const isFav = favorites?.includes(item.id);
+            return (
+              <div
+                key={item.id}
+                className="bg-white shadow-lg rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300 relative"
+              >
+                {/* Favorite Button (Top-right Heart) */}
+                <button
+                  onClick={() => toggleFave(item.id)}
+                  className="absolute top-3 right-3 bg-white/80 backdrop-blur-md p-2 rounded-full shadow hover:bg-white transition"
+                >
+                  <Heart
+                    className={`w-5 h-5 ${
+                      isFav ? "text-red-500 fill-red-500" : "text-gray-400"
+                    }`}
+                  />
                 </button>
+
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="h-48 w-full object-cover"
+                />
+
+                <div className="p-4 flex flex-col justify-between">
+                  <h2 className="text-lg font-semibold text-gray-700 mb-1">
+                    {item.name}
+                  </h2>
+                  <p className="text-sm text-gray-500 mb-2">{item.category}</p>
+                  <p className="text-gray-700 font-semibold mb-4">
+                    ₦{item.price.toLocaleString()}
+                  </p>
+                  <button
+                    onClick={() => addToCart(item.id)}
+                    className="bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* No Products Message */}

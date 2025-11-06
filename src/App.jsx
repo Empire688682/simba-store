@@ -10,6 +10,7 @@ import About from './component/Pages/About';
 import Cart from './component/Pages/Cart';
 import ProductDetails from './component/Pages/ProductDetails';
 import AddProduct from './component/Pages/AddProduct';
+import Favorites from './component/Pages/Favorite';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/favorite' element={<Favorites />} />
         <Route path='/shop/:id' element={<ProductDetails />} />
       </Routes>
       <Footer />
