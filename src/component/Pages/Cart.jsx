@@ -8,11 +8,12 @@ const Cart = () => {
 
   function getTotalAmount(){
     return Object.keys(cartItems).reduce((total, productId)=>{
-      const product = products.find((product)=>product.id === parseInt(productId));
-      if(!product) return total;
-      return total + product.price * cartItems[productId]
-    }, 0);
-  }
+      const product = products.find((p)=>p.id === parseInt(productId));
+      if(!product) return total
+      return total + product.price * cartItems[productId];
+    }, 0)
+  };
+  
 
   return (
     <div className="min-h-[80vh] bg-gray-50 pt-20 pb-28 px-6 md:px-20">
