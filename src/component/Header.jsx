@@ -1,12 +1,12 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { ShoppingCart, PawPrint, Menu, X } from "lucide-react";
+import { ShoppingCart, PawPrint, Menu, X, Heart } from "lucide-react";
 import { useState } from "react";
 import { UseGlobalContext } from "./Context";
 import { navLinks } from "./data";
 
 const Header = () => {
-  const {cartItems} = UseGlobalContext()
+  const {cartItems, favorites} = UseGlobalContext()
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -46,6 +46,15 @@ const Header = () => {
               {link.name}
             </NavLink>
           ))}
+          <Link
+            to="/favorite"
+            className="relative flex items-center text-gray-700 hover:text-amber-500"
+          >
+            <Heart size={24} />
+            <span className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+              {favorites.length}
+            </span>
+          </Link>
           <Link
             to="/cart"
             className="relative flex items-center text-gray-700 hover:text-amber-500"
