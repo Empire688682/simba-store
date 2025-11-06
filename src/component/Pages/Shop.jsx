@@ -4,10 +4,13 @@ import { Heart } from "lucide-react";
 import { categories } from "../data";
 
 const Shop = () => {
-  const { products, addToCart, favorites, toggleFave } = UseGlobalContext();
+  const { products, addToCart, favorites, toggleFave, cartItems } = UseGlobalContext();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  console.log("favorites:", favorites);
+  function isInCart(productId){
+    const isAdded = Object.keys(cartItems).filter(id=> parseInt(id) === productId);
+    console.log("isAdded:", isAdded);
+  }
   
 
   const filteredProducts =
@@ -61,6 +64,7 @@ const Shop = () => {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {filteredProducts.map((item) => {
             const isFav = favorites?.includes(item.id);
+            isInCart(item.id)
             return (
               <div
                 key={item.id}
@@ -96,7 +100,10 @@ const Shop = () => {
                     onClick={() => addToCart(item.id)}
                     className="bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition"
                   >
-                    Add to Cart
+                    {
+                      Object.keys(cartItems).includes(item.id) ? 
+                      "Added" : "Add to Cart"
+                    }
                   </button>
                 </div>
               </div>
