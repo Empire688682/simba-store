@@ -1,28 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ShoppingCart, Trash2 } from "lucide-react";
-
-const cartItems = [
-  {
-    id: 1,
-    name: "Royal Canin Puppy Food",
-    price: 12000,
-    image:
-      "/happy-dog.png",
-    qty: 1,
-  },
-  {
-    id: 2,
-    name: "Flea & Tick Shampoo",
-    price: 7500,
-    image:
-      "/happy-dog.png",
-    qty: 2,
-  },
-];
+import { UseGlobalContext } from "../Context";
 
 const Cart = () => {
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const { cartItems, products } = UseGlobalContext();
+
+  function getTotalAmount(){
+    return Object.keys(cartItems).reduce((total, productId)=>{
+      const product = products.find((product)=>product.id === parseInt(productId));
+      if(!product) return total;
+      return total + product.price * cartItems[productId]
+    }, 0);
+  }
 
   return (
     <div className="min-h-[80vh] bg-gray-50 pt-20 pb-28 px-6 md:px-20">
@@ -36,45 +26,50 @@ const Cart = () => {
           <h1 className="text-2xl font-bold text-gray-800">Your Cart</h1>
         </div>
 
-        {cartItems.length > 0 ? (
+        {Object.keys(cartItems).length > 0 ? (
           <div className="grid md:grid-cols-3 gap-10">
             {/* Cart Items */}
             <div className="md:col-span-2 space-y-6">
-              {cartItems.map((item) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex items-center justify-between border-b pb-4"
-                >
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-20 h-20 rounded-xl object-cover"
-                    />
-                    <div>
-                      <h2 className="font-semibold text-gray-800">
-                        {item.name}
-                      </h2>
-                      <p className="text-yellow-700 font-bold">
-                        ₦{item.price.toLocaleString()}
-                      </p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <button className="w-6 h-6 bg-gray-200 rounded-md hover:bg-gray-300 transition">
-                          -
-                        </button>
-                        <span className="text-gray-700">{item.qty}</span>
-                        <button className="w-6 h-6 bg-yellow-400 rounded-md hover:bg-yellow-500 transition">
-                          +
-                        </button>
+              {Object.keys(cartItems).map((productId) => {
+                const product = products.find((p) => p.id === parseInt(productId));
+                const quantity = cartItems[productId];
+
+                return (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex items-center justify-between border-b pb-4"
+                  >
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-20 h-20 rounded-xl object-cover"
+                      />
+                      <div>
+                        <h2 className="font-semibold text-gray-800">
+                          {product.name}
+                        </h2>
+                        <p className="text-yellow-700 font-bold">
+                          ₦{product.price.toLocaleString()}
+                        </p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <button className="w-6 h-6 bg-gray-200 rounded-md hover:bg-gray-300 transition">
+                            -
+                          </button>
+                          <span className="text-gray-700">{quantity}</span>
+                          <button className="w-6 h-6 bg-yellow-400 rounded-md hover:bg-yellow-500 transition">
+                            +
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <Trash2 className="text-red-500 cursor-pointer hover:scale-110 transition" />
-                </motion.div>
-              ))}
+                    <Trash2 className="text-red-500 cursor-pointer hover:scale-110 transition" />
+                  </motion.div>
+                )
+              })}
             </div>
 
             {/* Summary */}
@@ -84,7 +79,7 @@ const Cart = () => {
               </h2>
               <div className="flex justify-between text-gray-600 mb-2">
                 <p>Subtotal</p>
-                <p>₦{total.toLocaleString()}</p>
+                <p>₦{getTotalAmount().toLocaleString()}</p>
               </div>
               <div className="flex justify-between text-gray-600 mb-2">
                 <p>Shipping</p>
@@ -93,7 +88,7 @@ const Cart = () => {
               <div className="border-t mt-4 mb-3"></div>
               <div className="flex justify-between text-gray-900 font-bold text-lg">
                 <p>Total</p>
-                <p>₦{(total + 1500).toLocaleString()}</p>
+                <p>₦{(getTotalAmount() + 1500).toLocaleString()}</p>
               </div>
               <motion.button
                 whileTap={{ scale: 0.95 }}

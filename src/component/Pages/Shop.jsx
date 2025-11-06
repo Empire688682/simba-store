@@ -1,90 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { UseGlobalContext } from "../Context";
 
-const products = [
-  // 🐕 Dog Essentials
-  {
-    id: 1,
-    name: "Leather Dog Collar",
-    price: 4500,
-    category: "Dog Essentials",
-    image: "/happy-dog.png",
-  },
-  {
-    id: 2,
-    name: "Adjustable Dog Leash",
-    price: 6000,
-    category: "Dog Essentials",
-    image: "/happy-dog.png",
-  },
-
-  // 🍖 Food & Supplements
-  {
-    id: 3,
-    name: "Protein Dog Kibble",
-    price: 12500,
-    category: "Food & Supplements",
-    image: "/happy-dog.png",
-  },
-  {
-    id: 4,
-    name: "Vitamin & Omega-3 Supplement",
-    price: 8500,
-    category: "Food & Supplements",
-    image: "/happy-dog.png",
-  },
-
-  // 💊 Health & Drugs
-  {
-    id: 5,
-    name: "Anti-Tick & Flea Spray",
-    price: 7500,
-    category: "Health & Drugs",
-    image: "/happy-dog.png",
-  },
-  {
-    id: 6,
-    name: "Deworming Tablets",
-    price: 4000,
-    category: "Health & Drugs",
-    image: "/happy-dog.png",
-  },
-
-  // 🎾 Toys & Accessories
-  {
-    id: 7,
-    name: "Rubber Chew Toy",
-    price: 2500,
-    category: "Toys & Accessories",
-    image: "/happy-dog.png",
-  },
-  {
-    id: 8,
-    name: "Interactive Treat Ball",
-    price: 5500,
-    category: "Toys & Accessories",
-    image: "/happy-dog.png",
-  },
-
-  // 🧼 Grooming & Hygiene
-  {
-    id: 9,
-    name: "Dog Shampoo & Conditioner",
-    price: 6500,
-    category: "Grooming & Hygiene",
-    image: "/happy-dog.png",
-  },
-  {
-    id: 10,
-    name: "Pet Grooming Brush Set",
-    price: 5000,
-    category: "Grooming & Hygiene",
-    image: "/happy-dog.png",
-  },
-];
-
 const Shop = () => {
-  const {allProducts} = UseGlobalContext();
+  const {products, addToCart, } = UseGlobalContext();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const categories = [
@@ -163,7 +81,7 @@ const Shop = () => {
                 <p className="text-gray-700 font-semibold mb-4">
                   ₦{item.price.toLocaleString()}
                 </p>
-                <button className="bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition">
+                <button onClick={()=>addToCart(item.id)} className="bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition">
                   Add to Cart
                 </button>
               </div>
