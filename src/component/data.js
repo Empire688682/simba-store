@@ -5,14 +5,14 @@ export const localProducts = [
     name: "Leather Dog Collar",
     price: 4500,
     category: "Dog Essentials",
-    image: "/happy-dog.png",
+    image: "/dog-8378909_1920.jpg",
   },
   {
     id: 2,
     name: "Adjustable Dog Leash",
     price: 6000,
     category: "Dog Essentials",
-    image: "/happy-dog.png",
+    image: "/australian-shepherd-3237735_1920.jpg",
   },
 
   // 🍖 Food & Supplements
@@ -21,14 +21,14 @@ export const localProducts = [
     name: "Protein Dog Kibble",
     price: 12500,
     category: "Food & Supplements",
-    image: "/happy-dog.png",
+    image: "/fluffy-dog-9846034_1920.jpg",
   },
   {
     id: 4,
     name: "Vitamin & Omega-3 Supplement",
     price: 8500,
     category: "Food & Supplements",
-    image: "/happy-dog.png",
+    image: "/australian-shepherd-7176981_1920.jpg",
   },
 
   // 💊 Health & Drugs
@@ -37,7 +37,7 @@ export const localProducts = [
     name: "Anti-Tick & Flea Spray",
     price: 7500,
     category: "Health & Drugs",
-    image: "/happy-dog.png",
+    image: "/shepherd-dog-4357790_1920.jpg",
   },
   {
     id: 6,
