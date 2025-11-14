@@ -1,13 +1,16 @@
-import React from "react";
+
 import { motion } from "framer-motion";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Star } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { localProducts } from "../data";
+import { UseGlobalContext } from "../Context";
+import { AddReview } from "../AddReview";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const { addToCart } = UseGlobalContext();
   const product = localProducts.find((item) => item.id === parseInt(id));
-  
+
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-600">
@@ -49,6 +52,7 @@ const ProductDetails = () => {
             </p>
 
             <motion.button
+              onClick={() => addToCart(product.id)}
               whileTap={{ scale: 0.95 }}
               className="flex items-center justify-center gap-2 bg-yellow-500 text-white py-3 rounded-xl font-semibold hover:bg-yellow-600 transition"
             >
@@ -87,6 +91,43 @@ const ProductDetails = () => {
                 </motion.div>
               ))}
           </div>
+        </div>
+        {/* REVIEWS SECTION */}
+        <div className="mt-16">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800">Customer Reviews</h2>
+
+          {/* Reviews List */}
+          <div className="space-y-4 mb-10">
+            {product.reviews && product.reviews.length > 0 ? (
+              product.reviews.map((rev, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-gray-100 p-4 rounded-xl shadow"
+                >
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-1">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <Star
+                        key={s}
+                        className={`w-4 h-4 ${s <= rev.rating ? "text-yellow-500 fill-yellow-500" : "text-gray-400"
+                          }`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Comment */}
+                  <p className="text-gray-700">{rev.comment}</p>
+                </motion.div>
+              ))
+            ) : (
+              <p className="text-gray-600">No reviews yet.</p>
+            )}
+          </div>
+
+          {/* Add Review Form */}
+          <AddReview product={product} />
         </div>
       </motion.div>
     </div>
