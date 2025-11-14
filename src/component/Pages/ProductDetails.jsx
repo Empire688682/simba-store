@@ -2,44 +2,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
 import { useParams } from "react-router-dom";
-
-const products = [
-  {
-    id: "1",
-    name: "Royal Canin Puppy Food",
-    price: 12000,
-    category: "Food",
-    description:
-      "Specially formulated for puppies to promote strong bones, healthy digestion, and shiny coat. A perfect start for your furry friend!",
-    image:
-      "/happy-dog.png",
-  },
-  {
-    id: "2",
-    name: "Dog Flea & Tick Shampoo",
-    price: 7500,
-    category: "Grooming",
-    description:
-      "Keep your dog clean, fresh, and pest-free with our medicated flea and tick shampoo — gentle on skin, tough on parasites.",
-    image:
-      "/happy-dog.png",
-  },
-  {
-    id: "3",
-    name: "Calcium Supplement",
-    price: 5000,
-    category: "Supplement",
-    description:
-      "Boost your dog’s bone health and vitality with our premium calcium supplement, ideal for all breeds and sizes.",
-    image:
-      "/happy-dog.png",
-  },
-];
+import { localProducts } from "../data";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const product = products.find((item) => item.id === id);
-
+  const product = localProducts.find((item) => item.id === parseInt(id));
+  
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-600">
@@ -96,7 +64,7 @@ const ProductDetails = () => {
             Related Products
           </h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {products
+            {localProducts
               .filter((p) => p.id !== product.id)
               .slice(0, 3)
               .map((related) => (

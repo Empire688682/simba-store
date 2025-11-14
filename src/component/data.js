@@ -2,6 +2,8 @@ export const localProducts = [
   // 🐕 Dog Essentials
   {
     id: 1,
+     description:
+      "Specially formulated for puppies to promote strong bones, healthy digestion, and shiny coat. A perfect start for your furry friend!",
     name: "Leather Dog Collar",
     price: 4500,
     category: "Dog Essentials",
@@ -10,6 +12,8 @@ export const localProducts = [
   },
   {
     id: 2,
+     description:
+      "Specially formulated for puppies to promote strong bones, healthy digestion, and shiny coat. A perfect start for your furry friend!",
     name: "Adjustable Dog Leash",
     price: 6000,
     category: "Dog Essentials",
@@ -20,6 +24,8 @@ export const localProducts = [
   // 🍖 Food & Supplements
   {
     id: 3,
+     description:
+      "Specially formulated for puppies to promote strong bones, healthy digestion, and shiny coat. A perfect start for your furry friend!",
     name: "Protein Dog Kibble",
     price: 12500,
     category: "Food & Supplements",
@@ -28,6 +34,8 @@ export const localProducts = [
   },
   {
     id: 4,
+     description:
+      "Specially formulated for puppies to promote strong bones, healthy digestion, and shiny coat. A perfect start for your furry friend!",
     name: "Vitamin & Omega-3 Supplement",
     price: 8500,
     category: "Food & Supplements",
@@ -38,6 +46,8 @@ export const localProducts = [
   // 💊 Health & Drugs
   {
     id: 5,
+     description:
+      "Specially formulated for puppies to promote strong bones, healthy digestion, and shiny coat. A perfect start for your furry friend!",
     name: "Anti-Tick & Flea Spray",
     price: 7500,
     category: "Health & Drugs",
@@ -46,6 +56,8 @@ export const localProducts = [
   },
   {
     id: 6,
+     description:
+      "Specially formulated for puppies to promote strong bones, healthy digestion, and shiny coat. A perfect start for your furry friend!",
     name: "Deworming Tablets",
     price: 4000,
     category: "Health & Drugs",
@@ -56,6 +68,8 @@ export const localProducts = [
   // 🎾 Toys & Accessories
   {
     id: 7,
+     description:
+      "Specially formulated for puppies to promote strong bones, healthy digestion, and shiny coat. A perfect start for your furry friend!",
     name: "Rubber Chew Toy",
     price: 2500,
     category: "Toys & Accessories",
@@ -64,6 +78,8 @@ export const localProducts = [
   },
   {
     id: 8,
+     description:
+      "Specially formulated for puppies to promote strong bones, healthy digestion, and shiny coat. A perfect start for your furry friend!",
     name: "Interactive Treat Ball",
     price: 5500,
     category: "Toys & Accessories",
@@ -74,6 +90,8 @@ export const localProducts = [
   // 🧼 Grooming & Hygiene
   {
     id: 9,
+     description:
+      "Specially formulated for puppies to promote strong bones, healthy digestion, and shiny coat. A perfect start for your furry friend!",
     name: "Dog Shampoo & Conditioner",
     price: 6500,
     category: "Grooming & Hygiene",
@@ -82,6 +100,8 @@ export const localProducts = [
   },
   {
     id: 10,
+     description:
+      "Specially formulated for puppies to promote strong bones, healthy digestion, and shiny coat. A perfect start for your furry friend!",
     name: "Pet Grooming Brush Set",
     price: 5000,
     category: "Grooming & Hygiene",

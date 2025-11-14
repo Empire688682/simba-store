@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { UseGlobalContext } from "../Context";
 import { Heart } from "lucide-react";
 import { categories } from "../data";
+import { Link } from "react-router-dom";
 
 const Shop = () => {
   const { products, addToCart, favorites, toggleFave, cartItems } = UseGlobalContext();
@@ -88,7 +89,9 @@ const Shop = () => {
                   className="h-48 w-full object-cover"
                 />
 
-                <div className="p-4 flex flex-col justify-between">
+                <Link
+                to={`/shop/${item.id}`}
+                 className="p-4 flex flex-col justify-between">
                   <h2 className="text-lg font-semibold text-gray-700 mb-1">
                     {item.name}
                   </h2>
@@ -105,7 +108,7 @@ const Shop = () => {
                       "Added" : "Add to Cart"
                     }
                   </button>
-                </div>
+                </Link>
               </div>
             );
           })}
