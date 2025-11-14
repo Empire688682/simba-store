@@ -5,6 +5,7 @@ export const localProducts = [
     name: "Leather Dog Collar",
     price: 4500,
     category: "Dog Essentials",
+    reviews:[{rating:4, comment:"Good product"}], 
     image: "/dog-8378909_1920.jpg",
   },
   {
@@ -12,6 +13,7 @@ export const localProducts = [
     name: "Adjustable Dog Leash",
     price: 6000,
     category: "Dog Essentials",
+    reviews:[{rating:4, comment:"Good product"}], 
     image: "/australian-shepherd-3237735_1920.jpg",
   },
 
@@ -21,6 +23,7 @@ export const localProducts = [
     name: "Protein Dog Kibble",
     price: 12500,
     category: "Food & Supplements",
+    reviews:[{rating:4, comment:"Good product"}], 
     image: "/fluffy-dog-9846034_1920.jpg",
   },
   {
@@ -28,6 +31,7 @@ export const localProducts = [
     name: "Vitamin & Omega-3 Supplement",
     price: 8500,
     category: "Food & Supplements",
+    reviews:[{rating:4, comment:"Good product"}], 
     image: "/australian-shepherd-7176981_1920.jpg",
   },
 
@@ -37,6 +41,7 @@ export const localProducts = [
     name: "Anti-Tick & Flea Spray",
     price: 7500,
     category: "Health & Drugs",
+    reviews:[{rating:4, comment:"Good product"}], 
     image: "/shepherd-dog-4357790_1920.jpg",
   },
   {
@@ -44,6 +49,7 @@ export const localProducts = [
     name: "Deworming Tablets",
     price: 4000,
     category: "Health & Drugs",
+    reviews:[{rating:4, comment:"Good product"}], 
     image: "/happy-dog.png",
   },
 
@@ -53,6 +59,7 @@ export const localProducts = [
     name: "Rubber Chew Toy",
     price: 2500,
     category: "Toys & Accessories",
+    reviews:[{rating:4, comment:"Good product"}], 
     image: "/happy-dog.png",
   },
   {
@@ -60,6 +67,7 @@ export const localProducts = [
     name: "Interactive Treat Ball",
     price: 5500,
     category: "Toys & Accessories",
+    reviews:[{rating:4, comment:"Good product"}], 
     image: "/happy-dog.png",
   },
 
@@ -69,6 +77,7 @@ export const localProducts = [
     name: "Dog Shampoo & Conditioner",
     price: 6500,
     category: "Grooming & Hygiene",
+    reviews:[{rating:4, comment:"Good product"}], 
     image: "/happy-dog.png",
   },
   {
@@ -76,6 +85,7 @@ export const localProducts = [
     name: "Pet Grooming Brush Set",
     price: 5000,
     category: "Grooming & Hygiene",
+    reviews:[{rating:4, comment:"Good product"}], 
     image: "/happy-dog.png",
   },
 ];
